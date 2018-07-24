@@ -8,22 +8,21 @@
 </head>
 <body>
 <div id="sectionInput">
-
-    <div class="line-input">
-        <span style="background: #f9f9f9;">
+<div class="container-left">
+    <div class="line-input" id="line-input">
+        <span style="background: #f9f9f9;display: inline-block;height: 100%;position: absolute;top:0;left:0;">
             <span style="font-size: 10px;">1</span>
         </span>
-        <span id="notification-img"><img src="img/func40x40.png"></span>
-
-        <span id="inputField">ghdfhfsjhfsxmj&#8203;</span>
+        <span class="notification-img"></span>
+        <span id="inputField"></span>
         <span class="btn-delete-input"><i class="fas fa-times"></i></span>
     </div>
     <div class="line-input btn-addNewField">
         <span>
-            <span style="font-size: 10px;">2</span>
+            <span style="font-size: 10px;text-align: left;">2</span>
         </span>
     </div>
-
+</div>
     <div id="calculator" class="calculator-visible">
         <div class="calc-column">
             <div class="calc-row">
@@ -99,5 +98,6 @@
 </div>
 
 <script type="text/javascript" src="section-input.js"></script>
+<script src="helpers.js"></script>
 </body>
 </html>
