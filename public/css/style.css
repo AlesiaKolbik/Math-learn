@@ -160,11 +160,19 @@ html,body{
     background: linear-gradient(to top,#fff,rgba(255,255,255,0) 50%);
 }
 
-.container-left{
+.container-left,.container-right{
     width: 50%;
     height: 100%;
+
+}
+.container-left{
+    margin-right:3px ;
+    box-shadow: 2px -1px 1px 1px #2b2b2b59
 }
 
 .activeField{
     box-shadow:0 0 12px 0 #46bdffd9;
+}
+.fa-graduation-cap{
+    color: #ff9800;
 }
