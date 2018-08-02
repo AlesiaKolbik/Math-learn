@@ -3,45 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Math learn</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 </head>
 <body>
 <div id="sectionInput">
-<div class="container-left">
+<div class="container-left" id="input-form">
     <div class="line-input" id="line-input">
         <span style="background: #f9f9f9;display: inline-block;height: 100%;position: absolute;top:0;left:0;">
             <span style="font-size: 10px;">1</span>
         </span>
         <span class="notification-img"></span>
-        <span id="inputField"></span>
+        <span class="inputField"></span>
         <span class="btn-delete-input"><i class="fas fa-times"></i></span>
     </div>
-    <div class="line-input btn-addNewField">
+    <div class="line-input btn-addNewField" id="btn-add-item">
         <span>
             <span style="font-size: 10px;text-align: left;">2</span>
         </span>
     </div>
+
 </div>
-    <div id="calculator" class="calculator-visible">
+    <div id="calculator">
         <div class="calc-column">
             <div class="calc-row">
                 <div class="button-keypad"><var>x</var></div>
                 <div class="button-keypad"><var>y</var></div>
-
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><var>a<sup>2</sup></var></div>
-                <div class="button-keypad"><var>a<sup>b</sup></var></div>
-
-            </div>
-            <div class="calc-row">
                 <div class="button-keypad"><span>&#40;</span></div>
                 <div class="button-keypad"><span>&#41;</span></div>
 
             </div>
             <div class="calc-row">
+                <div class="button-keypad"><var>a<sup>2</sup></var></div>
                 <div class="button-keypad"><var>&#124;a&#124;</var></div>
+            </div>
+            <div class="calc-row">
+                <div class="button-keypad"><span>&#8592;</span></div>
+                <div class="button-keypad"><span>&#8594;</span></div>
+
+            </div>
+            <div class="calc-row">
+                <div class="button-keypad"><i class="fas fa-backspace"></i></div>
+                <div class="button-keypad"><span>&#8629;</span></div>
             </div>
         </div>
         <div style="flex-grow: 0.5;"></div>
@@ -71,29 +74,29 @@
                 <div class="button-keypad"><span>&#43;</span></div>
             </div>
         </div>
-        <div style="flex-grow: 0.5;"></div>
-        <div class="calc-column">
-            <div class="calc-row">
-                <div class="button-keypad"><span>&#8592;</span></div>
-                <div class="button-keypad"><span>&#8594;</span></div>
-            </div>
-            <div class="calc-row">
 
-            </div>
-            <div class="calc-row">
-                <div style="flex-grow: 0.5;"></div>
-                <div class="button-keypad"><i class="fas fa-backspace"></i></div>
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><span>&#8629;</span></div>
-            </div>
         </div>
+    <div class="button-keypad-toggle open" onclick="calculatorHidden(event)"><i class="far fa-keyboard"></i><i class="fas fa-sort-up"></i></i></div>
     </div>
-    <div class="button-keypad-toggle close"><i class="far fa-keyboard"></i><i class="fas fa-sort-up"></i></div>
+
 </div>
 
-<script type="text/javascript" src="section-input.js"></script>
-<script src="helpers.js"></script>
+<script type="text/javascript" src="js/input/model/formula.js"></script>
+<script>
+    const keypad = document.getElementById('calculator');
+
+    function calculatorHidden(e) {
+        const buttonKeypad = e.currentTarget;
+        keypad.classList.toggle('calculator-visible');
+        buttonKeypad.classList.toggle('close');
+        setTimeout(function () {
+            let icon = buttonKeypad.querySelector('.fas');
+            icon.classList.toggle('fa-sort-down');
+            icon.classList.toggle('fa-sort-up');
+            buttonKeypad.classList.toggle('open');
+        },0)
+    }
+</script>
 </body>
 
 </html>
