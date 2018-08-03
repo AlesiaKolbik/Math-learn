@@ -1,12 +1,78 @@
-*{
-    margin: 0;
-    padding: 0;
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
+    margin: 0;
 }
-html,body{
+html, body, .container{
     width: 100%;
     height: 100%;
 }
+.container{
+    display: flex;
+   flex-direction: column;
+   height: 100vh;
+}
+
+.header,.footer {
+    background: #4dd959;
+    color:white;
+    width: 100%;
+    height: 5%;
+}
+.columns {
+    display: flex;
+    align-content: stretch;
+    width: 100%;
+    flex-grow: 1;
+}
+.column-one {
+    flex-basis: 35%;
+    border: 1px solid red;
+    overflow-y: auto;
+    font-family: 'Modern Antiqua', cursive;
+    color: #8b0d09;
+}
+.column-two {
+    flex: 2;
+    border: 1px solid red;;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+.area {
+    width: 100%;
+    padding: 10px;
+}
+h1{
+    font-family: 'Modern Antiqua', cursive;
+    color:white;
+    margin-left: 200px;
+    display: inline-block;
+}
+h2 {
+    text-align: center;
+}
+.flexContainer {
+    display: flex;
+}
+.inputField {
+    flex: 1;
+}
+.fa-bars{
+    color:white;
+    font-size: 30px;
+    margin-left: 20px;
+    line-height: 50px;
+}
+
+
+
+
+
+/*alesia*/
 
 #sectionInput {
     min-width: 320px;
@@ -177,4 +243,36 @@ html,body{
 }
 .fa-graduation-cap{
     color: #ff9800;
+}
+
+.fa-bars{
+    color: white;
+    font-size: 30px;
+    margin-left: 20px;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+}
+
+.side-menu{
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top:0;
+    background: #4dd959;
+    color: #e38b00;
+    width: 20%;
+    height: 100vh;
+    border-right:solid #53b987 2px;
+    display: flex;
+    flex-direction: column;
+}
+.side-menu span{
+   flex-grow: 1;
+    text-align: center;
+}
+.hidden{
+   width: 0;
+    opacity: 0;
 }

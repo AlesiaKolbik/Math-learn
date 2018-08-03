@@ -5,9 +5,31 @@
     <title>Math learn</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
 <body>
-<div id="sectionInput">
+<div class="container">
+    <div class="header">
+        <i class="fas fa-bars button-burger-menu"></i>
+        <h1> <i class="fas fa-graduation-cap"></i> math learn</h1>
+    </div>
+   <div class="side-menu hidden" id="side-menu">
+    <span style="flex-grow: 2"></span>
+        <span>1.линейная функция</span>
+        <span>2.линейная функция</span>
+        <span>3.линейная функция</span>
+        <span>4.линейная функция</span>
+        <span>5.линейная функция</span>
+        <span>6.линейная функция</span>
+        <span>7.линейная функция</span>
+        <span>8.линейная функция</span>
+    <span style="flex-grow: 5"></span>
+    </div>
+    <div class="columns">
+        <div class="column-one">
+            <div class="area"></div>
+        </div>
+        <div class="column-two">
 <div class="container-left" id="input-form">
     <div class="line-input" id="line-input">
         <span style="background: #f9f9f9;display: inline-block;height: 100%;position: absolute;top:0;left:0;">
@@ -80,10 +102,72 @@
     </div>
 
 </div>
+<div class="footer">Copyright © 2018. Все права защищены.</div>
+</div>
 
 <script type="text/javascript" src="js/input/model/formula.js"></script>
 <script>
-    const keypad = document.getElementById('calculator');
+
+    document.addEventListener('DOMContentLoaded', theory);
+    localStorage.key = 0;
+    let lvl = localStorage.key;
+    const area = document.querySelector('.area');
+
+
+    function theory() {
+        xhr = new XMLHttpRequest;
+        let output = '';
+        xhr.open('GET', '../JSON/1.json', true);
+        xhr.onreadystatechange = function() {
+            if(this.readyState == 4 && this.status == 200) {
+                let test = JSON.parse(this.responseText);
+                let arr = test[lvl]["theory"].split('\n');
+                let equations = test[lvl]["equation"];
+                output += '<h2>'+test[lvl]["title"]+'</h2>';
+
+                arr.forEach(function(i){
+                    output += '<p>'+i+'</p>';
+                });
+                area.innerHTML = output;
+                let button = document.createElement('button');
+                button.innerHTML = "click me";
+                button.id = 'checkButton';
+                area.appendChild(button);
+                button.addEventListener('click', checkAnswer);
+                lvl++;
+            }
+        };
+        xhr.send();
+    }
+
+    function addInp() {
+        let newInp = '';
+        newInp += '<div class="flexContainer">' +
+            '<input type="text" class="inputField">' +
+            '<button type="button" class="del" onclick="deleteInp()">' + 'delete' + '</button>' +
+            '<button type="button" onclick="addInp()">' +'add'+'</button>'+
+            '</div>'
+        practice2.innerHTML += newInp;
+    }
+    function deleteInp(){
+        console.log(event);
+        event.target.parentNode.style.display = 'none';
+    }
+     function checkAnswer() {
+         xhr = new XMLHttpRequest;
+         var output = '';
+         xhr.open('GET', '1.json', true);
+         xhr.onreadystatechange = function() {
+             if(this.readyState == 4 && this.status == 200) {
+                var test = JSON.parse(this.responseText);
+              console.log('kekeke')
+             }
+         }
+         xhr.send();
+     }
+
+
+    const keypad = document.getElementById('calculator'); //кнопка скрыть показать экранную клавиатуру
 
     function calculatorHidden(e) {
         const buttonKeypad = e.currentTarget;
