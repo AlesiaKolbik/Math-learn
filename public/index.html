@@ -10,7 +10,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <i class="fas fa-bars button-burger-menu"></i>
+        <i class="fas fa-bars button-burger-menu" onclick="showSideMenu(event)"></i>
         <h1> <i class="fas fa-graduation-cap"></i> math learn</h1>
     </div>
    <div class="side-menu hidden" id="side-menu">
@@ -25,84 +25,87 @@
         <span>8.линейная функция</span>
     <span style="flex-grow: 5"></span>
     </div>
-    <div class="columns">
+    <div class="columns" onmousedown="startResizeColumns(event)" onmousemove="resizeColumns(event)" onmouseup="stopResize(event)">
         <div class="column-one">
             <div class="area"></div>
         </div>
+        <div class="button-resize"></div>
         <div class="column-two">
-<div class="container-left" id="input-form">
-    <div class="line-input" id="line-input">
-        <span style="background: #f9f9f9;display: inline-block;height: 100%;position: absolute;top:0;left:0;">
-            <span style="font-size: 10px;">1</span>
-        </span>
-        <span class="notification-img"></span>
-        <span class="inputField"></span>
-        <span class="btn-delete-input"><i class="fas fa-times"></i></span>
+            <div class="container-left" id="input-form">
+                <div class="line-input" id="line-input">
+                    <span style="background: #f9f9f9;display: inline-block;height: 100%;position: absolute;top:0;left:0;">
+                        <span style="font-size: 10px;">1</span>
+                    </span>
+                    <span class="notification-img"></span>
+                    <span class="inputField"></span>
+                    <span class="btn-delete-input"><i class="fas fa-times"></i></span>
+                </div>
+                <div class="line-input btn-addNewField" id="btn-add-item">
+                    <span>
+                        <span style="font-size: 10px;text-align: left;">2</span>
+                    </span>
+                </div>
+
+            </div>
+            <div class="container-right"></div>
+            <div id="calculator">
+                <div class="calc-column">
+                    <div class="calc-row">
+                        <div class="button-keypad"><var>x</var></div>
+                        <div class="button-keypad"><var>y</var></div>
+                        <div class="button-keypad"><span>&#40;</span></div>
+                        <div class="button-keypad"><span>&#41;</span></div>
+
+                    </div>
+                    <div class="calc-row">
+                        <div class="button-keypad"><var>a<sup>2</sup></var></div>
+                        <div class="button-keypad"><var>&#124;a&#124;</var></div>
+                    </div>
+                    <div class="calc-row">
+                        <div class="button-keypad"><span>&#8592;</span></div>
+                        <div class="button-keypad"><span>&#8594;</span></div>
+
+                    </div>
+                    <div class="calc-row">
+                        <div class="button-keypad"><i class="fas fa-backspace"></i></div>
+                        <div class="button-keypad"><span>&#8629;</span></div>
+                    </div>
+                </div>
+                <div style="flex-grow: 0.5;"></div>
+                <div class="calc-column">
+                    <div class="calc-row">
+                        <div class="button-keypad"><span>7</span></div>
+                        <div class="button-keypad"><span>8</span></div>
+                        <div class="button-keypad"><span>9</span></div>
+                        <div class="button-keypad"><span>&#247;</span></div>
+                    </div>
+                    <div class="calc-row">
+                        <div class="button-keypad"><span>4</span></div>
+                        <div class="button-keypad"><span>5</span></div>
+                        <div class="button-keypad"><span>6</span></div>
+                        <div class="button-keypad"><span>&#215;</span></div>
+                    </div>
+                    <div class="calc-row">
+                        <div class="button-keypad"><span>1</span></div>
+                        <div class="button-keypad"><span>2</span></div>
+                        <div class="button-keypad"><span>3</span></div>
+                        <div class="button-keypad"><span>&#45;</span></div>
+                    </div>
+                    <div class="calc-row">
+                        <div class="button-keypad"><span>0</span></div>
+                        <div class="button-keypad"><span>&#46;</span></div>
+                        <div class="button-keypad"><span>&#61;</span></div>
+                        <div class="button-keypad"><span>&#43;</span></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="button-keypad-toggle open" onclick="calculatorHidden(event)"><i class="far fa-keyboard"></i><i class="fas fa-sort-up"></i></i></div>
     </div>
-    <div class="line-input btn-addNewField" id="btn-add-item">
-        <span>
-            <span style="font-size: 10px;text-align: left;">2</span>
-        </span>
-    </div>
+
 
 </div>
-    <div id="calculator">
-        <div class="calc-column">
-            <div class="calc-row">
-                <div class="button-keypad"><var>x</var></div>
-                <div class="button-keypad"><var>y</var></div>
-                <div class="button-keypad"><span>&#40;</span></div>
-                <div class="button-keypad"><span>&#41;</span></div>
-
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><var>a<sup>2</sup></var></div>
-                <div class="button-keypad"><var>&#124;a&#124;</var></div>
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><span>&#8592;</span></div>
-                <div class="button-keypad"><span>&#8594;</span></div>
-
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><i class="fas fa-backspace"></i></div>
-                <div class="button-keypad"><span>&#8629;</span></div>
-            </div>
-        </div>
-        <div style="flex-grow: 0.5;"></div>
-        <div class="calc-column">
-            <div class="calc-row">
-                <div class="button-keypad"><span>7</span></div>
-                <div class="button-keypad"><span>8</span></div>
-                <div class="button-keypad"><span>9</span></div>
-                <div class="button-keypad"><span>&#247;</span></div>
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><span>4</span></div>
-                <div class="button-keypad"><span>5</span></div>
-                <div class="button-keypad"><span>6</span></div>
-                <div class="button-keypad"><span>&#215;</span></div>
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><span>1</span></div>
-                <div class="button-keypad"><span>2</span></div>
-                <div class="button-keypad"><span>3</span></div>
-                <div class="button-keypad"><span>&#45;</span></div>
-            </div>
-            <div class="calc-row">
-                <div class="button-keypad"><span>0</span></div>
-                <div class="button-keypad"><span>&#46;</span></div>
-                <div class="button-keypad"><span>&#61;</span></div>
-                <div class="button-keypad"><span>&#43;</span></div>
-            </div>
-        </div>
-
-        </div>
-    <div class="button-keypad-toggle open" onclick="calculatorHidden(event)"><i class="far fa-keyboard"></i><i class="fas fa-sort-up"></i></i></div>
-    </div>
-
-</div>
-<div class="footer">Copyright © 2018. Все права защищены.</div>
+    <div class="footer"><p>Copyright © 2018. Все права защищены.</p></div>
 </div>
 
 <script type="text/javascript" src="js/input/model/formula.js"></script>
@@ -180,6 +183,77 @@
             buttonKeypad.classList.toggle('open');
         },0)
     }
+
+    let buttonResize = null;
+    let columnLeft = null;
+    let columnRight = null;
+    let cursorCoordX = 0;
+    let flexBoxValueColumnLeft = 0;
+    let flexBoxValueColumnRight = 0;
+
+
+    function startResizeColumns(e) {
+        buttonResize = e.target;
+        if(buttonResize.classList.contains('button-resize')){
+            columnLeft = buttonResize.previousElementSibling;
+            columnRight = buttonResize.nextElementSibling;
+            flexBoxValueColumnLeft = parseFloat(window.getComputedStyle(columnLeft).webkitFlexGrow);
+            flexBoxValueColumnRight = parseFloat(window.getComputedStyle(columnRight).webkitFlexGrow);
+            cursorCoordX = e.clientX;
+            document.body.style.cursor = 'col-resize';
+        }
+        else{
+            stopResize(e);
+            return false;
+        }
+
+    }
+//кнопка изменения размеров блоков
+    function resizeColumns(e) {
+
+        if (buttonResize) {
+            if(flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 < 0.06588275882352941 || flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 > 1.52353){
+                stopResize(e);
+                return false;
+            }
+            columnLeft.setAttribute('style', '-webkit-box-flex: ' + ( flexBoxValueColumnLeft + (e.clientX - cursorCoordX) / 850) + '; flex: ' + (flexBoxValueColumnLeft + (e.clientX - cursorCoordX) / 850) + ' 1 0%');
+            columnRight.setAttribute('style', '-webkit-box-flex: ' + ( flexBoxValueColumnRight - (e.clientX - cursorCoordX) / 850) + '; flex: ' + (flexBoxValueColumnRight - (e.clientX - cursorCoordX) / 850) + ' 1 0%');
+        }
+
+    }
+
+    function stopResize(e) {
+        columnLeft = null;
+        columnRight = null;
+        buttonResize = null;
+        cursorCoordX = 0;
+        document.body.style.cursor = 'auto';
+    }
+
+//кнопка показать меню
+
+    const menu = document.getElementById('side-menu');
+
+    function showSideMenu(e){
+     let btn = null;
+
+     if(!e){
+         btn = document.querySelector('.fa-times');
+     }
+     else{
+         btn = e.target;
+     }
+
+        menu.classList.toggle('hidden');
+        const widthMenu = menu.offsetWidth;
+        btn.setAttribute('style', 'transform:translateX('+ (widthMenu - btn.offsetWidth) +'px);');
+        btn.classList.toggle('fa-bars');
+        btn.classList.toggle('fa-times');
+ }
+
+
+
+
 </script>
 </body>
 

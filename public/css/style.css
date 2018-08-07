@@ -12,8 +12,8 @@ html, body, .container{
 }
 .container{
     display: flex;
-   flex-direction: column;
-   height: 100vh;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .header,.footer {
@@ -21,26 +21,40 @@ html, body, .container{
     color:white;
     width: 100%;
     height: 5%;
+    min-height: 34px;
+    position: relative;
+    display: flex;
+    align-items:center;
 }
+
 .columns {
     display: flex;
     align-content: stretch;
     width: 100%;
     flex-grow: 1;
+    border: 1px solid #FF9800;
 }
 .column-one {
-    flex-basis: 35%;
-    border: 1px solid red;
+    -webkit-box-flex: 1;
+    flex: 1 1 0%;
     overflow-y: auto;
     font-family: 'Modern Antiqua', cursive;
     color: #8b0d09;
 }
 .column-two {
-    flex: 2;
-    border: 1px solid red;;
+    -webkit-box-flex: 1;
+    flex: 1 1 0%;
     display: flex;
     position: relative;
     overflow: hidden;
+}
+.button-resize{
+    width: 5px;
+    border-right: 1px solid #c6c6c6;
+    border-left: 1px solid #c6c6c6;
+    background-color: #eee;
+    z-index: 100;
+    cursor: col-resize;
 }
 .area {
     width: 100%;
@@ -51,6 +65,7 @@ h1{
     color:white;
     margin-left: 200px;
     display: inline-block;
+    line-height: 49px;
 }
 h2 {
     text-align: center;
@@ -153,7 +168,7 @@ h2 {
 }
 
 .far, .fas{
-   font-size: 25px;
+    font-size: 25px;
     color: grey;
     margin: 0 2px;
 }
@@ -200,7 +215,7 @@ h2 {
 
 
 .btn-addNewField{
-   border: none;
+    border: none;
 }
 
 .btn-addNewField:before{
@@ -229,9 +244,11 @@ h2 {
 }
 
 .container-left,.container-right{
+    box-sizing: border-box;
     width: 50%;
     height: 100%;
-
+    -webkit-box-flex: 1;
+    flex: 1 1 0%;
 }
 .container-left{
     margin-right:3px ;
@@ -245,13 +262,13 @@ h2 {
     color: #ff9800;
 }
 
-.fa-bars{
+.fa-bars,.fa-times{
     color: white;
     font-size: 30px;
     margin-left: 20px;
     display: inline-block;
-    height: 50px;
-    width: 50px;
+    height: 31px;
+    width: 100px;
     text-align: center;
 }
 
@@ -268,11 +285,17 @@ h2 {
     display: flex;
     flex-direction: column;
 }
+.fa-times{
+    position: fixed;
+    width: 50px;
+    z-index: 110;
+}
 .side-menu span{
-   flex-grow: 1;
+    flex-grow: 1;
     text-align: center;
 }
 .hidden{
-   width: 0;
+    width: 0;
     opacity: 0;
 }
+

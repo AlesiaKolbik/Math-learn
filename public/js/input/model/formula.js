@@ -225,7 +225,7 @@ class FormulaController{
     constructor(formula, formulaViewInput, formulaViewValidatorData) {
         this.formula = formula;
         this.formulaViewInput = formulaViewInput;
-        this.formulaViewValidatorData = formulaViewValidatorData;
+        //this.formulaViewValidatorData = formulaViewValidatorData;
 
         formulaViewInput.on('toggle', this.toggleInput.bind(this));
         //formulaViewInput.on('edit', this.activeInput.bind(this));
