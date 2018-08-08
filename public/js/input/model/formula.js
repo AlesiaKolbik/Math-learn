@@ -45,7 +45,6 @@ class Formula extends EventEmitter{
     }
 
     addItem(item) {
-
         if(this.data.length > this.maxlength){
             return false;   //проверяем чтобы не было переполнение массива
         }
@@ -121,6 +120,32 @@ class Validator{
         return this.validCharacters.test(item);
     }
 }
+/*class Keypad extends EventEmitter{
+    constructor(){
+        super();
+        this.keypad = document.getElementById('calculator');
+        this.key = null;
+        this.keyValue = this.key['data-key-value'];
+    }
+    handleClick(event){
+        this.key = event.target;
+        this.emit('click',event);
+    }
+}*/
+class KeypadView extends EventEmitter{
+    constructor(){
+        super();
+        this.keypad = document.getElementById('calculator');
+        this.keypad.addEventListener('click', this.handleClick.bind(this));
+    }
+
+    handleClick(event){
+        if(event.target && event.target.hasAttribute('data-key-value') || event.target.parentNode.hasAttribute('data-key-value')){
+            const keyValue = event.target.getAttribute('data-key-value') || event.target.parentNode.getAttribute('data-key-value');
+            this.emit('click', keyValue );
+        }
+    }
+}
 
 class FormulaViewInput extends EventEmitter{
     constructor(){
@@ -141,11 +166,12 @@ class FormulaViewInput extends EventEmitter{
             this.input.classList.add('activeField');
             this.inputField.appendChild(this.caret.value);
         }
-        else if(this.input.classList.contains ( 'activeField' )){
+        else if(this.input.classList.contains ( 'activeField' ) && find(event.path, '#calculator')){
             this.input.classList.remove('activeField');
             this.inputField.removeChild(this.caret.value);
         }
     }
+
 
     handleAddItem(event){
         if(event){
@@ -199,12 +225,11 @@ class FormulaViewInput extends EventEmitter{
 }
 
 
-class FormulaViewValidatorData extends EventEmitter{
+/*class FormulaViewValidatorData extends EventEmitter{
     constructor(){
         super();
-        this.model = formula; //передаем id поля куда вставить картинку и состояние данных true или false;
-        this.id = this.model.getId();
-        this.stateData = this.model.getStateData();
+         //передаем id поля куда вставить картинку и состояние данных true или false;
+
         this.valid = '<img src="../../../img/func40x40.png">';
         this.notValid = '<img src="../../../img/WarningTriangle40x40.png">';
     }
@@ -219,12 +244,13 @@ class FormulaViewValidatorData extends EventEmitter{
             field.innerHTML = this.notValid;
         }
     }
-}
+}*/
 
-class FormulaController{
-    constructor(formula, formulaViewInput, formulaViewValidatorData) {
+class FormulaController {
+    constructor(formula, formulaViewInput,keypadView) {
         this.formula = formula;
         this.formulaViewInput = formulaViewInput;
+        this.keypad = keypadView;
         //this.formulaViewValidatorData = formulaViewValidatorData;
 
         formulaViewInput.on('toggle', this.toggleInput.bind(this));
@@ -232,23 +258,53 @@ class FormulaController{
         formulaViewInput.on('keydown', this.deleteItem.bind(this));
         formulaViewInput.on('keypress', this.addItem.bind(this));
         //formulaViewInput.show(formula.state);
+        keypadView.on('click', this.addItem.bind(this));
     }
 
-        addItem(item){
-
+    addItem(item) {
+        if(/\$/.test(item)){
+            switch (item){
+                case '$backspace':{
+                    this.formulaViewInput.handleDeleteItem({which:8});
+                    break;
+                }
+                case '$enter':{
+                    break;
+                }
+                case '$^2':{
+                    this.formulaViewInput.handleAddItem({key:'^'});
+                    this.formulaViewInput.handleAddItem({key:'2'});
+                    break;
+                }
+                case '$|a|':{
+                    break;
+                }
+                case 'left':{
+                    break;
+                }
+                case '$right':{
+                    break;
+                }
+            }
+        }
+        else{
             const node = this.formula.addItem(item);
-            if(node){
+            if (node) {
                 this.formulaViewInput.addItem(node);
             }
         }
-        toggleInput(element){
-            this.formulaViewInput.toggleInput(element);
-        }
-         deleteItem(node){
-            this.formula.deleteItem(node);
-            this.formulaViewInput.deleteItem(node);
-        }
+
     }
+
+    toggleInput(element) {
+        this.formulaViewInput.toggleInput(element);
+    }
+
+    deleteItem(node) {
+        this.formula.deleteItem(node);
+        this.formulaViewInput.deleteItem(node);
+    }
+}
 
 class Caret{
     constructor() {
@@ -276,11 +332,14 @@ class Caret{
 
 
 
+
 const formula = new Formula(new Validator());
 
 
 const input = new FormulaViewInput();
 
-const controller = new FormulaController(formula, input);
+const keypadView = new KeypadView();
+
+const controller = new FormulaController(formula, input, keypadView);
 
 

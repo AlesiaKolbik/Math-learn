@@ -27,6 +27,7 @@ html, body, .container{
     align-items:center;
 }
 
+
 .columns {
     display: flex;
     align-content: stretch;
@@ -133,6 +134,7 @@ h2 {
     border-radius: 5px;
     background: ghostwhite;
     flex-grow: 1;
+    cursor: pointer;
 }
 #calculator.calculator-visible{
     bottom: 0;
@@ -297,5 +299,24 @@ h2 {
 .hidden{
     width: 0;
     opacity: 0;
+}
+
+.like{
+    position: fixed;
+
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    top:0;
+    left:0;
+    bottom: 0;
+    right: 0;
+    display: none;
+
+}
+.like i{
+    font-size: 80px;
+    color: #4dd959;
+    transition: .5s font-size;
 }
 

@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Modern+Antiqua" rel="stylesheet">
 </head>
 <body>
+<div class="like" ><i class="fas fa-check-circle"></i></div>
 <div class="container">
     <div class="header">
         <i class="fas fa-bars button-burger-menu" onclick="showSideMenu(event)"></i>
@@ -51,56 +52,56 @@
             <div id="calculator">
                 <div class="calc-column">
                     <div class="calc-row">
-                        <div class="button-keypad"><var>x</var></div>
-                        <div class="button-keypad"><var>y</var></div>
-                        <div class="button-keypad"><span>&#40;</span></div>
-                        <div class="button-keypad"><span>&#41;</span></div>
+                        <div class="button-keypad" data-key-value="x"><var>x</var></div>
+                        <div class="button-keypad" data-key-value="y"><var>y</var></div>
+                        <div class="button-keypad" data-key-value="("><span>&#40;</span></div>
+                        <div class="button-keypad" data-key-value=")"><span>&#41;</span></div>
 
                     </div>
                     <div class="calc-row">
-                        <div class="button-keypad"><var>a<sup>2</sup></var></div>
-                        <div class="button-keypad"><var>&#124;a&#124;</var></div>
+                        <div class="button-keypad" data-key-value="$^2"><var>a<sup>2</sup></var></div>
+                        <div class="button-keypad" data-key-value="$|a|"><var>&#124;a&#124;</var></div>
                     </div>
                     <div class="calc-row">
-                        <div class="button-keypad"><span>&#8592;</span></div>
-                        <div class="button-keypad"><span>&#8594;</span></div>
+                        <div class="button-keypad" data-key-value="$left"><span>&#8592;</span></div>
+                        <div class="button-keypad" data-key-value="$right"><span>&#8594;</span></div>
 
                     </div>
                     <div class="calc-row">
-                        <div class="button-keypad"><i class="fas fa-backspace"></i></div>
-                        <div class="button-keypad"><span>&#8629;</span></div>
+                        <div class="button-keypad" data-key-value="$backspace"><i class="fas fa-backspace"></i></div>
+                        <div class="button-keypad" data-key-value="$enter"><span>&#8629;</span></div>
                     </div>
                 </div>
                 <div style="flex-grow: 0.5;"></div>
                 <div class="calc-column">
                     <div class="calc-row">
-                        <div class="button-keypad"><span>7</span></div>
-                        <div class="button-keypad"><span>8</span></div>
-                        <div class="button-keypad"><span>9</span></div>
-                        <div class="button-keypad"><span>&#247;</span></div>
+                        <div class="button-keypad" data-key-value="7"><span>7</span></div>
+                        <div class="button-keypad" data-key-value="8"><span>8</span></div>
+                        <div class="button-keypad" data-key-value="9"><span>9</span></div>
+                        <div class="button-keypad" data-key-value="/"><span>&#247;</span></div>
                     </div>
                     <div class="calc-row">
-                        <div class="button-keypad"><span>4</span></div>
-                        <div class="button-keypad"><span>5</span></div>
-                        <div class="button-keypad"><span>6</span></div>
-                        <div class="button-keypad"><span>&#215;</span></div>
+                        <div class="button-keypad" data-key-value="4"><span>4</span></div>
+                        <div class="button-keypad" data-key-value="5"><span>5</span></div>
+                        <div class="button-keypad" data-key-value="6"><span>6</span></div>
+                        <div class="button-keypad" data-key-value="*"><span>&#215;</span></div>
                     </div>
                     <div class="calc-row">
-                        <div class="button-keypad"><span>1</span></div>
-                        <div class="button-keypad"><span>2</span></div>
-                        <div class="button-keypad"><span>3</span></div>
-                        <div class="button-keypad"><span>&#45;</span></div>
+                        <div class="button-keypad" data-key-value="1"><span>1</span></div>
+                        <div class="button-keypad" data-key-value="2"><span>2</span></div>
+                        <div class="button-keypad" data-key-value="3"><span>3</span></div>
+                        <div class="button-keypad" data-key-value="-"><span>&#45;</span></div>
                     </div>
                     <div class="calc-row">
-                        <div class="button-keypad"><span>0</span></div>
-                        <div class="button-keypad"><span>&#46;</span></div>
-                        <div class="button-keypad"><span>&#61;</span></div>
-                        <div class="button-keypad"><span>&#43;</span></div>
+                        <div class="button-keypad" data-key-value="0"><span>0</span></div>
+                        <div class="button-keypad" data-key-value="."><span>&#46;</span></div>
+                        <div class="button-keypad" data-key-value="="><span>&#61;</span></div>
+                        <div class="button-keypad" data-key-value="+"><span>&#43;</span></div>
                     </div>
                 </div>
 
             </div>
-            <div class="button-keypad-toggle open" onclick="calculatorHidden(event)"><i class="far fa-keyboard"></i><i class="fas fa-sort-up"></i></i></div>
+            <div id="btn-calculator" class="button-keypad-toggle open" onclick="calculatorHidden(event)"><i class="far fa-keyboard"></i><i class="fas fa-sort-up"></i></div>
     </div>
 
 
@@ -118,11 +119,12 @@
 
 
     function theory() {
-        xhr = new XMLHttpRequest;
+        const xhr = new XMLHttpRequest;
         let output = '';
-        xhr.open('GET', '../JSON/1.json', true);
+        xhr.open('GET', '1.json', true);
+        xhr.send();
         xhr.onreadystatechange = function() {
-            if(this.readyState == 4 && this.status == 200) {
+            if(this.readyState === 4 && this.status === 200) {
                 let test = JSON.parse(this.responseText);
                 let arr = test[lvl]["theory"].split('\n');
                 let equations = test[lvl]["equation"];
@@ -140,33 +142,21 @@
                 lvl++;
             }
         };
-        xhr.send();
+
     }
 
-    function addInp() {
-        let newInp = '';
-        newInp += '<div class="flexContainer">' +
-            '<input type="text" class="inputField">' +
-            '<button type="button" class="del" onclick="deleteInp()">' + 'delete' + '</button>' +
-            '<button type="button" onclick="addInp()">' +'add'+'</button>'+
-            '</div>'
-        practice2.innerHTML += newInp;
-    }
-    function deleteInp(){
-        console.log(event);
-        event.target.parentNode.style.display = 'none';
-    }
      function checkAnswer() {
-         xhr = new XMLHttpRequest;
-         var output = '';
+         const xhr = new XMLHttpRequest;
+         let output = '';
          xhr.open('GET', '1.json', true);
-         xhr.onreadystatechange = function() {
-             if(this.readyState == 4 && this.status == 200) {
-                var test = JSON.parse(this.responseText);
-              console.log('kekeke')
-             }
-         }
          xhr.send();
+         xhr.onreadystatechange = function() {
+             if(this.readyState === 4 && this.status === 200) {
+                let test = JSON.parse(this.responseText);
+              console.log('kekeke');
+             }
+         };
+
      }
 
 
@@ -212,7 +202,7 @@
     function resizeColumns(e) {
 
         if (buttonResize) {
-            if(flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 < 0.06588275882352941 || flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 > 1.52353){
+            if(flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 < 0.06588275882352941 || flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 > 1.257){
                 stopResize(e);
                 return false;
             }
@@ -250,11 +240,25 @@
         btn.classList.toggle('fa-bars');
         btn.classList.toggle('fa-times');
  }
+//показать галочку за правильное решшение;
+ function showLike() {
+   const like = document.querySelector('.like');
+    like.style.display = 'flex';
+     setTimeout(function () {
+         like.querySelector('i').style.fontSize = '800px';
+     },10);
+     setTimeout(function () {
+         like.querySelector('i').style.fontSize = '80px';
+         like.style.display = 'none';
+     },1500);
+ }
+
 
 
 
 
 </script>
+<scripr src="js\input\helpers.js"></scripr>
 </body>
 
 </html>
