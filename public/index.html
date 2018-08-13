@@ -26,7 +26,7 @@
         <span>8.линейная функция</span>
     <span style="flex-grow: 5"></span>
     </div>
-    <div class="columns" onmousedown="startResizeColumns(event)" onmousemove="resizeColumns(event)" onmouseup="stopResize(event)">
+    <div class="columns" ondragstart="return false;" onmousedown="startResizeColumns(event)" onmousemove="resizeColumns(event)" onmouseup="stopResize(event)">
         <div class="column-one">
             <div class="area"></div>
         </div>
@@ -183,8 +183,9 @@
 
 
     function startResizeColumns(e) {
-        buttonResize = e.target;
-        if(buttonResize.classList.contains('button-resize')){
+
+        if(e.target.classList.contains('button-resize')){
+            buttonResize = e.target;
             columnLeft = buttonResize.previousElementSibling;
             columnRight = buttonResize.nextElementSibling;
             flexBoxValueColumnLeft = parseFloat(window.getComputedStyle(columnLeft).webkitFlexGrow);
@@ -193,7 +194,6 @@
             document.body.style.cursor = 'col-resize';
         }
         else{
-            stopResize(e);
             return false;
         }
 
@@ -219,6 +219,7 @@
         cursorCoordX = 0;
         document.body.style.cursor = 'auto';
     }
+
 
 //кнопка показать меню
 
