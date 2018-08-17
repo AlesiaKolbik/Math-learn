@@ -212,7 +212,7 @@ h2 {
     font-size:30px;
     position: absolute;
     top:5px;
-    right: 2px;
+    right: 25px;
 }
 
 
@@ -264,7 +264,7 @@ h2 {
     color: #ff9800;
 }
 
-.fa-bars,.fa-times{
+.fa-bars{
     color: white;
     font-size: 30px;
     margin-left: 20px;
@@ -299,6 +299,7 @@ h2 {
 .hidden{
     width: 0;
     opacity: 0;
+    display: none;
 }
 
 .like{
@@ -318,5 +319,14 @@ h2 {
     font-size: 80px;
     color: #4dd959;
     transition: .5s font-size;
+}
+#btn-next{
+    border: none;
+    background: orange;
+    color:white;
+    border-radius: 2px;
+    padding: 5px;
+    cursor: pointer;
+    margin: 20px;
 }
 

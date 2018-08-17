@@ -26,7 +26,7 @@
         <span>8.линейная функция</span>
     <span style="flex-grow: 5"></span>
     </div>
-    <div class="columns" ondragstart="return false;" onmousedown="startResizeColumns(event)" onmousemove="resizeColumns(event)" onmouseup="stopResize(event)">
+    <div class="columns">
         <div class="column-one">
             <div class="area"></div>
         </div>
@@ -35,7 +35,7 @@
             <div class="container-left" id="input-form">
                 <div class="line-input" id="line-input">
                     <span style="background: #f9f9f9;display: inline-block;height: 100%;position: absolute;top:0;left:0;">
-                        <span style="font-size: 10px;">1</span>
+                        <span class ='data-number-input' style="font-size: 10px;">1</span>
                     </span>
                     <span class="notification-img"></span>
                     <span class="inputField"></span>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="line-input btn-addNewField" id="btn-add-item">
                     <span>
-                        <span style="font-size: 10px;text-align: left;">2</span>
+                        <span class ='data-number-input' style="font-size: 10px;text-align: left;">2</span>
                     </span>
                 </div>
 
@@ -109,54 +109,59 @@
     <div class="footer"><p>Copyright © 2018. Все права защищены.</p></div>
 </div>
 
-<script type="text/javascript" src="js/input/model/formula.js"></script>
+
 <script>
-
     document.addEventListener('DOMContentLoaded', theory);
-    localStorage.key = 0;
-    let lvl = localStorage.key;
-    const area = document.querySelector('.area');
 
+    const area = document.querySelector('.area');
+    let page = 0;
+    const path = document.location.href;
 
     function theory() {
         const xhr = new XMLHttpRequest;
-        let output = '';
-        xhr.open('GET', '1.json', true);
+        xhr.open('GET', ''+page+'.json', true);
         xhr.send();
         xhr.onreadystatechange = function() {
             if(this.readyState === 4 && this.status === 200) {
-                let test = JSON.parse(this.responseText);
-                let arr = test[lvl]["theory"].split('\n');
-                let equations = test[lvl]["equation"];
-                output += '<h2>'+test[lvl]["title"]+'</h2>';
-
-                arr.forEach(function(i){
-                    output += '<p>'+i+'</p>';
-                });
-                area.innerHTML = output;
-                let button = document.createElement('button');
-                button.innerHTML = "click me";
-                button.id = 'checkButton';
-                area.appendChild(button);
-                button.addEventListener('click', checkAnswer);
-                lvl++;
+                let text = JSON.parse(this.responseText);
+                parseText(text);
             }
         };
-
     }
 
      function checkAnswer() {
          const xhr = new XMLHttpRequest;
-         let output = '';
-         xhr.open('GET', '1.json', true);
+         xhr.open('GET', ''+page+'.json', true);
          xhr.send();
          xhr.onreadystatechange = function() {
              if(this.readyState === 4 && this.status === 200) {
-                let test = JSON.parse(this.responseText);
-              console.log('kekeke');
+                let text = JSON.parse(this.responseText);
+                parseText(text);
              }
          };
 
+     }
+
+     function parseText(text) {
+         let output = '';
+         let arr = text["theory"].split('\n');
+         let equations = text["equation"];
+         output += '<h2>'+text["title"]+'</h2>';
+
+         arr.forEach(function(i){
+             output += '<p>'+i+'</p>';
+         });
+         area.innerHTML = output;
+         let button = document.createElement('input');
+         button.value = "ДАЛЕЕ";
+         button.id = 'btn-next';
+         button.type = 'button';
+         area.appendChild(button);
+         button.addEventListener('click', checkAnswer);
+         page ++;
+         if (page === 8) {
+             page = 0;
+         }
      }
 
 
@@ -180,9 +185,11 @@
     let cursorCoordX = 0;
     let flexBoxValueColumnLeft = 0;
     let flexBoxValueColumnRight = 0;
+    const columns = document.querySelector('.columns');
 
+    columns.ondragstart = function (){return false;};
 
-    function startResizeColumns(e) {
+    columns.onmousedown = function startResizeColumns(e) {
 
         if(e.target.classList.contains('button-resize')){
             buttonResize = e.target;
@@ -197,30 +204,31 @@
             return false;
         }
 
-    }
+    };
 //кнопка изменения размеров блоков
-    function resizeColumns(e) {
+    columns.onmousemove = function resizeColumns(e) {
 
         if (buttonResize) {
             if(flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 < 0.06588275882352941 || flexBoxValueColumnLeft + (e.clientX - cursorCoordX)/850 > 1.257){
-                stopResize(e);
+                stopResize();
                 return false;
             }
             columnLeft.setAttribute('style', '-webkit-box-flex: ' + ( flexBoxValueColumnLeft + (e.clientX - cursorCoordX) / 850) + '; flex: ' + (flexBoxValueColumnLeft + (e.clientX - cursorCoordX) / 850) + ' 1 0%');
             columnRight.setAttribute('style', '-webkit-box-flex: ' + ( flexBoxValueColumnRight - (e.clientX - cursorCoordX) / 850) + '; flex: ' + (flexBoxValueColumnRight - (e.clientX - cursorCoordX) / 850) + ' 1 0%');
         }
+        else return false;
 
+    };
+
+    columns.onmouseup = stopResize();
+
+        function stopResize() {
+            columnLeft = null;
+            columnRight = null;
+            buttonResize = null;
+            cursorCoordX = 0;
+            document.body.style.cursor = 'auto';
     }
-
-    function stopResize(e) {
-        columnLeft = null;
-        columnRight = null;
-        buttonResize = null;
-        cursorCoordX = 0;
-        document.body.style.cursor = 'auto';
-    }
-
-
 //кнопка показать меню
 
     const menu = document.getElementById('side-menu');
@@ -259,7 +267,7 @@
 
 
 </script>
-<scripr src="js\input\helpers.js"></scripr>
+<script type="module" src="js/input/index.js"></script>
 </body>
 
 </html>
