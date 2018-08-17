@@ -1,32 +1,17 @@
+import { EventEmitter } from '../helpers.js';
+import { Validator } from './validator.js';
 
 
 
-
-
-class EventEmitter{
-    constructor(){
-        this.events = {};
-
-    }
-    on(type, callback){
-        this.events[type] = this.events[type] || [];
-        this.events[type].push(callback);
-    }
-    emit(type, arg){
-        if(this.events[type]){
-            this.events[type].forEach((callback => callback(arg)));
-        }
-    }
-}
-
-class Formula extends EventEmitter{
+ export class Formula extends EventEmitter{
     constructor(validator) {
         super();
-        this.data = [];
+        this.data = [{'line-input':[]}];
         this.maxlength = 18;
         this.id = Date.now();
         this.stateData = false;
         this.isPower = false;
+        this.isNumber = false;
         if (validator instanceof Validator) {
             this.validator = validator;
         }
@@ -36,12 +21,9 @@ class Formula extends EventEmitter{
         return this.stateData;
     }
 
-    getId(){
-        return this.id;
-    }
-
     validateItem(item) {
-        this.stateData = this.validator.validate(item);
+        this.validator.validate(item);
+        this.stateData = this.validator.validItem;
     }
 
     addItem(item) {
@@ -51,8 +33,15 @@ class Formula extends EventEmitter{
         this.validateItem(item); //проверяем введенные данные и если они true добавляем в массив
 
         if(this.stateData){
-            this.data.push(item);
-            return this.generateWrapForItem(item); //генерируем узел для HTML и возвращаем в контроллер
+            if(this.isNumber && (/[0-9]/.test(item))){
+                this.data[this.data.length -1] +=  '' +item;
+                return this.generateWrapForItem(item); //генерируем узел для HTML и возвращаем в контроллер
+            }
+            else{
+                this.data.push(item);
+                return this.generateWrapForItem(item); //генерируем узел для HTML и возвращаем в контроллер
+            }
+
         }
         else return false;
     }
@@ -69,22 +58,29 @@ class Formula extends EventEmitter{
             node.textContent = item;
         }
         else if(letters.test(item) ){
+            this.isNumber = false;
             node = document.createElement('var');
             node.textContent = item + ' ';
-
         }
         else if(signMultiply.test(item)){
+            this.isNumber = false;
             node = document.createElement('sup');
             node.textContent = item + ' ';
 
         }
         else if(signPower.test(item)){
             this.isPower = true;
+            this.isNumber = false;
         }
-        else{
+        else if(digit.test(item)){
             node = document.createElement('span');
             node.textContent = item + ' ';
-
+            this.isNumber = true;
+        }
+        else{
+            this.isNumber = false;
+            node = document.createElement('span');
+            node.textContent = item + ' ';
         }
         if(node){
             node.setAttribute('data-index', this.data.length-1);
@@ -101,25 +97,29 @@ class Formula extends EventEmitter{
 
     }
 
-
-    deleteFormula() {
-        this.data = [];
+    addNewInput(data){
+        this.data.push(data);
+        console.log('добавился новый массив, данные формулы обновились');
+        console.log(this.data);
     }
 
-}
 
-class Validator{
-    constructor(){
-        this.validCharacters = /[a-z0-9\-\(\)\.\/\^\+\=\|\*]/;
-    }
-
-    validate(item){
-        if(typeof(item) !== "string"){
-            item += '';
+    deleteInput(id) {
+        for(let i = 0;i < this.data.length;i++){
+            for(let k in this.data[i]){
+                if(k === id){
+                    this.data.splice(i, 1);
+                    break;
+                }
+            }
         }
-        return this.validCharacters.test(item);
+        console.log('удалили массив, данные формулы обновились');
+        console.log(this.data);
     }
+
 }
+
+
 /*class Keypad extends EventEmitter{
     constructor(){
         super();
@@ -132,7 +132,9 @@ class Validator{
         this.emit('click',event);
     }
 }*/
-class KeypadView extends EventEmitter{
+
+
+/*class KeypadView extends EventEmitter{
     constructor(){
         super();
         this.keypad = document.getElementById('calculator');
@@ -145,9 +147,9 @@ class KeypadView extends EventEmitter{
             this.emit('click', keyValue );
         }
     }
-}
+}*/
 
-class FormulaViewInput extends EventEmitter{
+/*class FormulaViewInput extends EventEmitter{
     constructor(){
         super();
         this.caret = new Caret();
@@ -222,7 +224,7 @@ class FormulaViewInput extends EventEmitter{
     deleteInput(){
 
     }
-}
+}*/
 
 
 /*class FormulaViewValidatorData extends EventEmitter{
@@ -246,7 +248,7 @@ class FormulaViewInput extends EventEmitter{
     }
 }*/
 
-class FormulaController {
+/*class FormulaController {
     constructor(formula, formulaViewInput,keypadView) {
         this.formula = formula;
         this.formulaViewInput = formulaViewInput;
@@ -304,9 +306,9 @@ class FormulaController {
         this.formula.deleteItem(node);
         this.formulaViewInput.deleteItem(node);
     }
-}
+}*/
 
-class Caret{
+/*class Caret{
     constructor() {
         let self = this;
         this.value = document.createElement('strong');
@@ -328,18 +330,11 @@ class Caret{
 
         this.timer = setTimeout(flash, 500);
     }
-}
+}*/
 
 
 
 
-const formula = new Formula(new Validator());
 
-
-const input = new FormulaViewInput();
-
-const keypadView = new KeypadView();
-
-const controller = new FormulaController(formula, input, keypadView);
 
 
